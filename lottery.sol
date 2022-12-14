@@ -55,7 +55,7 @@ contract Lottery {
         uint256 ticketCount = msg.value / ticketpricewei;
 
         // Check that there is enough space in the players array to store the new tickets.
-        require(players.length + ticketCount < maxTickets);
+        require(players.length + ticketCount <= maxTickets);
 
         // Add the sender's address to the players array for each ticket bought.
         for (uint256 i = 0; i < ticketCount; i++) {
@@ -76,7 +76,7 @@ contract Lottery {
         uint64 Request_ID = IMidpoint(startpointAddress).callMidpoint(midpointID, args);
     }
 
-    function payWinner(uint256 random) public payable{
+    function payWinner(uint256 random) public{
         require(tx.origin == whitelistedCallbackAddress, "Invalid callback address");
 
         uint index = random;
