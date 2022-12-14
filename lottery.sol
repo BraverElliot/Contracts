@@ -1,3 +1,4 @@
+
 // SPDX-License-Identifier: MIT
 
 
@@ -47,20 +48,20 @@ contract Lottery {
 
 
     function enter() public payable {
-    // Check that the message value is greater than the minimum amount required to buy a ticket.
-    require(msg.value >= ticketpricegwei);
-    require(isOpen == true, "the lottery has not started yet");
-    // Calculate the number of tickets that can be bought with the message value.
-    uint256 ticketCount = msg.value / ticketpricegwei;
+        // Check that the message value is greater than the minimum amount required to buy a ticket.
+        require(msg.value >= ticketpricegwei, "did not pay enough");
+        require(isOpen == true, "the lottery has not started yet");
+        // Calculate the number of tickets that can be bought with the message value.
+        uint256 ticketCount = msg.value / ticketpricegwei;
 
-    // Check that there is enough space in the players array to store the new tickets.
-    require(players.length + ticketCount <= maxTickets);
+        // Check that there is enough space in the players array to store the new tickets.
+        require(players.length + ticketCount >= maxTickets);
 
-    // Add the sender's address to the players array for each ticket bought.
-    for (uint256 i = 0; i < ticketCount; i++) {
-        players.push(msg.sender);
+        // Add the sender's address to the players array for each ticket bought.
+        for (uint256 i = 0; i < ticketCount; i++) {
+            players.push(msg.sender);
+        }
     }
-}
        
     //   function random() private view returns(uint){
     //     return uint(keccak256(block.difficulty, now, players));
