@@ -28,7 +28,7 @@ contract Lottery {
     address public latestWinner;
     bool public isOpen;
     uint256 public minimum=0;
-    uint256 public ticketpricegwei;
+    uint256 public ticketpricewei;
     uint256 public maxTickets;
 
     constructor(uint64 _midpointID, address _startpointAddress){
@@ -37,11 +37,11 @@ contract Lottery {
         startpointAddress=_startpointAddress;
     }
 
-    function startLottery(uint256 _maxTickets,uint256 _gweival) public onlyOwner{
+    function startLottery(uint256 _maxTickets,uint256 _weival) public onlyOwner{
         require(isOpen == false, "the lottery has not started yet");
 
         maxTickets = _maxTickets;
-        ticketpricegwei = _gweival;
+        ticketpricewei = _weival;
         isOpen=true;
     }
 
@@ -49,13 +49,13 @@ contract Lottery {
 
     function enter() public payable {
         // Check that the message value is greater than the minimum amount required to buy a ticket.
-        require(msg.value >= ticketpricegwei, "did not pay enough");
-        require(isOpen == true, "the lottery has not started yet");
+        require(msg.value >= ticketpricewei, "did not pay enough");
+        require(isOpen, "the lottery has not started yet");
         // Calculate the number of tickets that can be bought with the message value.
-        uint256 ticketCount = msg.value / ticketpricegwei;
+        uint256 ticketCount = msg.value / ticketpricewei;
 
         // Check that there is enough space in the players array to store the new tickets.
-        require(players.length + ticketCount >= maxTickets);
+        require(players.length + ticketCount < maxTickets);
 
         // Add the sender's address to the players array for each ticket bought.
         for (uint256 i = 0; i < ticketCount; i++) {
