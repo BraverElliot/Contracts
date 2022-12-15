@@ -5,7 +5,7 @@
 // made by BraverElliot.eth (send me money)
 pragma solidity ^0.8.7;
 
-contract CaptureTheFlag {
+contract Countinggame {
 
 
     address [] public userArray;
